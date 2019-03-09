@@ -1,7 +1,7 @@
 package com.example.androidsurvivalcoding.bmicalculator
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.androidsurvivalcoding.R
 
 class BmiResultActivity : AppCompatActivity() {
