@@ -10,16 +10,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".bmicalculator.BmiResultActivity">
-        </activity>
-        <activity android:name=".bmicalculator.BmiMainActivity">
+        <activity android:name=".bmicalculator.BmiResultActivity"
+            android:label="비만도 계산기"
+            android:parentActivityName=".bmicalculator.BmiMainActivity"/>
+        <activity android:name=".bmicalculator.BmiMainActivity"
+            android:label="비만도 계산기"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="안드로이드 생존코딩">
 
         </activity>
     </application>
