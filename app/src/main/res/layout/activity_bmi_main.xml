@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/weightEditTextLayout"
             android:hint="몸무게"

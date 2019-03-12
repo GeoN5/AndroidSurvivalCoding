@@ -58,12 +58,15 @@
             app:elevation="10dp"/>
 
     <Button
+            android:id="@+id/labButton"
             android:text="랩 타임"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/labButton"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"/>
 
     <ScrollView
             android:layout_width="wrap_content"
