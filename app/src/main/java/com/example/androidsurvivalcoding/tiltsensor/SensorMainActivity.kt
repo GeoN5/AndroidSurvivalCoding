@@ -10,12 +10,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.androidsurvivalcoding.R
 
 //X = 수평(왼쪽 -,오른쪽 +), Y = 수직(아래쪽 -, 위쪽 +), Z = 화면의 바깥쪽(+)
 //가로모드기 때문에 좌표축이 돌아감(기기 기준으로 생각하기).
+
 class SensorMainActivity : AppCompatActivity() ,SensorEventListener{
 
+    private lateinit var tiltView: TiltView
     private val sensorManager by lazy {
         getSystemService(Context.SENSOR_SERVICE) as SensorManager
     }
@@ -26,7 +27,9 @@ class SensorMainActivity : AppCompatActivity() ,SensorEventListener{
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         //가로 모드 설정
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        setContentView(R.layout.activity_sensor_main)
+        //커스텀뷰 설정
+        tiltView = TiltView(this)
+        setContentView(tiltView)
     }
 
     //액티비티가 동작할 때만 센서 활성화.
@@ -51,6 +54,8 @@ class SensorMainActivity : AppCompatActivity() ,SensorEventListener{
     override fun onSensorChanged(event: SensorEvent?) { //센서값 변경 콜백
         event?.let {
             Log.d("MainActivity","onSensorChanged: x : ${event.values[0]}, y : ${event.values[1]}, z : ${event.values[2]}")
+            tiltView.onSensorEvent(event)
         }
     }
+
 }
