@@ -42,8 +42,8 @@ class TiltView(context: Context?) : View(context) {
     }
 
     fun onSensorEvent(event: SensorEvent){
-        xCoord = event.values[0] * 20
-        yCoord = event.values[1] * 20
+        xCoord = event.values[0] * 25
+        yCoord = event.values[1] * 25
         //onDraw() 메소드 재호출
         invalidate()
     }

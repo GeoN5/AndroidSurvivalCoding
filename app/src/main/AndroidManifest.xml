@@ -4,6 +4,7 @@
           package="com.example.androidsurvivalcoding">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -14,9 +15,8 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".tiltsensor.SensorMainActivity"
-                android:label="수평 측정기"
+        <activity android:name=".mygallery.GalleryMainActivity"
+                android:label="전자액자"
                 android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,12 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity
+                android:name=".tiltsensor.SensorMainActivity"
+                android:label="수평 측정기"
+                android:parentActivityName=".MainActivity"/>
         <activity
                 android:name=".webbrowser.WebMainActivity"
                 android:label="나만의 웹 브라우저"
                 android:parentActivityName=".MainActivity"/>
-
         <activity
                 android:name=".stopwatch.StopWatchMainActivity"
                 android:label="스톱워치"
