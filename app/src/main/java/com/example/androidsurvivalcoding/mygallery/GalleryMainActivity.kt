@@ -8,14 +8,17 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.androidsurvivalcoding.R
+import kotlinx.android.synthetic.main.activity_gallery_main.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
+import kotlin.concurrent.timer
 
 
-private val REQUEST_READ_EXTERNA_STORAGE = 1000
+private const val REQUEST_READ_EXTERNAL_STORAGE = 1000
 
 class GalleryMainActivity : AppCompatActivity() {
 
@@ -33,7 +36,7 @@ class GalleryMainActivity : AppCompatActivity() {
                         //권한 요청
                         ActivityCompat.requestPermissions(this@GalleryMainActivity,
                             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                            REQUEST_READ_EXTERNA_STORAGE)
+                            REQUEST_READ_EXTERNAL_STORAGE)
                     }
                     noButton {  }
                 }.show()
@@ -41,7 +44,7 @@ class GalleryMainActivity : AppCompatActivity() {
                 //권한 요청
                 ActivityCompat.requestPermissions(this@GalleryMainActivity,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_READ_EXTERNA_STORAGE)
+                    REQUEST_READ_EXTERNAL_STORAGE)
             }
         }else{
             //권한이 이미 허용됨
@@ -53,7 +56,7 @@ class GalleryMainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
-            REQUEST_READ_EXTERNA_STORAGE -> {
+            REQUEST_READ_EXTERNAL_STORAGE -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     //권한 허용됨
                     getAllPhotos()
@@ -74,13 +77,32 @@ class GalleryMainActivity : AppCompatActivity() {
             null, //조건
             MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC") //찍은 날짜 내림차순
 
+        val fragments = ArrayList<Fragment>()
+
         cursor?.let {
             while (cursor.moveToNext()){
                 //사진 경로 Uri 가져오기
                 val uri = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                 Log.d("photo",uri)
+                fragments.add(PhotoFragment.newInstance(uri))
             }
             cursor.close()
+        }
+
+        //어댑터
+        val adapter = MyPagerAdapter(supportFragmentManager)
+        adapter.updateFragments(fragments)
+        viewPager.adapter = adapter
+
+        //3초마다 자동 슬라이드
+        timer(period = 3000){ //백그라운드 스레드로 동작
+            runOnUiThread {
+                if(viewPager.currentItem < adapter.count -1){ //다음 페이지로 전환
+                    viewPager.currentItem = viewPager.currentItem +1
+                }else{ //마지막 페이지
+                    viewPager.currentItem = 0
+                }
+            }
         }
     }
 
